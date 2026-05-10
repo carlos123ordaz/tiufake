@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>TIU Virtual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    height: 100%;
+    background: #ffffff;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #1f2937;
+    overflow: hidden;
+  }
+
+  .phone {
+    position: relative;
+    width: 100%;
+    max-width: 430px;
+    height: 100vh;
+    margin: 0 auto;
+    background: #ffffff;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ---------- HEADER ---------- */
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px 6px;
+    z-index: 10;
+  }
+
+  .back-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .back-btn svg { width: 12px; height: 12px; }
+
+  .header-title {
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: 0.2px;
+    color: #2b2b3a;
+  }
+
+  /* ---------- CLOCK ---------- */
+  .clock-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 18px;
+    z-index: 10;
+  }
+
+  .clock {
+    background: #e7e3f6;
+    color: #1c1c2b;
+    font-size: 44px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    padding: 10px 38px;
+    border-radius: 22px;
+    font-variant-numeric: tabular-nums;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .date {
+    margin-top: 14px;
+    color: #6b7280;
+    font-size: 15px;
+    font-weight: 400;
+  }
+
+  /* ---------- PHOTO + CLOUDS ---------- */
+  .photo-area {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    min-height: 200px;
+  }
+
+  .clouds {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .cloud {
+    position: absolute;
+    opacity: 0.55;
+    animation-name: drift;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: transform;
+  }
+
+  /* Different sizes / vertical positions / speeds for each cloud */
+  .cloud.c1 { top: 20%; width: 110px; animation-duration: 28s; animation-delay: 0s;     opacity: 0.45; }
+  .cloud.c2 { top: 55%; width: 80px;  animation-duration: 36s; animation-delay: -8s;    opacity: 0.6;  }
+  .cloud.c3 { top: 75%; width: 140px; animation-duration: 24s; animation-delay: -14s;   opacity: 0.5;  }
+  .cloud.c4 { top: 35%; width: 65px;  animation-duration: 40s; animation-delay: -20s;   opacity: 0.4;  }
+  .cloud.c5 { top: 88%; width: 95px;  animation-duration: 32s; animation-delay: -5s;    opacity: 0.55; }
+  .cloud.c6 { top: 8%;  width: 70px;  animation-duration: 38s; animation-delay: -25s;   opacity: 0.5;  }
+
+  @keyframes drift {
+    from { transform: translateX(120vw); }
+    to   { transform: translateX(-200px); }
+  }
+
+  .photo {
+    position: relative;
+    z-index: 2;
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    background:
+      linear-gradient(135deg, #d8d8e6 0%, #b9b9cc 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(80,80,120,0.18);
+    overflow: hidden;
+    border: 4px solid #ffffff;
+  }
+
+  .photo .placeholder-icon {
+    width: 70px;
+    height: 70px;
+    color: #ffffff;
+    opacity: 0.85;
+  }
+
+  /* ---------- CARD ---------- */
+  .card {
+    position: relative;
+    z-index: 5;
+    margin: 0 18px 28px;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 6px 24px rgba(40,40,80,0.10);
+    padding: 24px 20px 26px;
+    text-align: center;
+  }
+
+  .name {
+    font-family: 'Oswald', 'Inter', sans-serif;
+    color: #ec3a3a;
+    font-weight: 700;
+    font-size: 30px;
+    letter-spacing: 1px;
+    line-height: 1.15;
+  }
+
+  .name .line2 {
+    display: block;
+    margin-top: 4px;
+    letter-spacing: 3px;
+  }
+
+  .label {
+    margin-top: 16px;
+    color: #4b5563;
+    font-size: 14.5px;
+    font-weight: 400;
+  }
+
+  .value {
+    margin-top: 2px;
+    color: #1c3556;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.4px;
+  }
+
+  .divider-space { height: 8px; }
+
+  .career {
+    margin-top: 20px;
+    color: #1c3556;
+    font-weight: 700;
+    font-size: 15.5px;
+    letter-spacing: 0.4px;
+  }
+
+  .campus {
+    margin-top: 8px;
+    color: #1c3556;
+    font-size: 15px;
+    font-weight: 400;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Faint background illustration behind the card area to mimic the original */
+  .bg-illustration {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 320px;
+    background:
+      radial-gradient(ellipse at 20% 80%, rgba(200,200,230,0.35) 0%, rgba(255,255,255,0) 60%),
+      radial-gradient(ellipse at 80% 90%, rgba(200,200,230,0.30) 0%, rgba(255,255,255,0) 55%);
+    pointer-events: none;
+    z-index: 1;
+  }
+</style>
+</head>
+<body>
+  <div class="phone">
+    <!-- Header -->
+    <div class="header">
+      <div class="back-btn" aria-label="Volver">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 6 L9 12 L15 18" stroke="#ec3a3a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="header-title">TIU VIRTUAL</div>
+    </div>
+
+    <!-- Clock + date -->
+    <div class="clock-wrap">
+      <div id="clock" class="clock">00:00:00</div>
+      <div id="date" class="date">—</div>
+    </div>
+
+    <!-- Photo + animated clouds -->
+    <div class="photo-area">
+      <div class="clouds">
+        <!-- 6 SVG clouds floating left -->
+        <svg class="cloud c1" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 60 Q20 60 25 40 Q15 20 45 22 Q55 5 80 15 Q105 0 120 25 Q160 20 165 45 Q185 50 175 65 Q165 75 140 70 L60 70 Q40 72 50 60 Z" fill="#bcb9d9"/>
+        </svg>
+        <svg class="cloud c2" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 60 Q20 60 25 40 Q15 20 45 22 Q55 5 80 15 Q105 0 120 25 Q160 20 165 45 Q185 50 175 65 Q165 75 140 70 L60 70 Q40 72 50 60 Z" fill="#a6a3c9"/>
+        </svg>
+        <svg class="cloud c3" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 60 Q20 60 25 40 Q15 20 45 22 Q55 5 80 15 Q105 0 120 25 Q160 20 165 45 Q185 50 175 65 Q165 75 140 70 L60 70 Q40 72 50 60 Z" fill="#bcb9d9"/>
+        </svg>
+        <svg class="cloud c4" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 60 Q20 60 25 40 Q15 20 45 22 Q55 5 80 15 Q105 0 120 25 Q160 20 165 45 Q185 50 175 65 Q165 75 140 70 L60 70 Q40 72 50 60 Z" fill="#cfcde6"/>
+        </svg>
+        <svg class="cloud c5" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 60 Q20 60 25 40 Q15 20 45 22 Q55 5 80 15 Q105 0 120 25 Q160 20 165 45 Q185 50 175 65 Q165 75 140 70 L60 70 Q40 72 50 60 Z" fill="#b3b0d2"/>
+        </svg>
+        <svg class="cloud c6" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 60 Q20 60 25 40 Q15 20 45 22 Q55 5 80 15 Q105 0 120 25 Q160 20 165 45 Q185 50 175 65 Q165 75 140 70 L60 70 Q40 72 50 60 Z" fill="#c4c1de"/>
+        </svg>
+      </div>
+
+      <div class="photo" aria-label="Foto de perfil (placeholder)">
+        <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="9" r="4" fill="currentColor"/>
+          <path d="M4 21c0-4.418 3.582-8 8-8s8 3.582 8 8" fill="currentColor"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="bg-illustration"></div>
+
+    <!-- Card -->
+    <div class="card">
+      <div class="name">
+        CARLOS JESUS
+        <span class="line2">O*** H***</span>
+      </div>
+
+      <div class="label">Código de alumno:</div>
+      <div class="value">U20201B873</div>
+
+      <div class="divider-space"></div>
+
+      <div class="label">ID Banner:</div>
+      <div class="value">N01205598</div>
+
+      <div class="career">CIENCIAS DE LA COMPUTACIÓN</div>
+      <div class="campus">📍 Campus San Miguel</div>
+    </div>
+  </div>
+
+  <script>
+    // ---------- Live clock (Spanish) ----------
+    const clockEl = document.getElementById('clock');
+    const dateEl  = document.getElementById('date');
+
+    const dias  = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+    const meses = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+    function tick() {
+      const now = new Date();
+      clockEl.textContent =
+        pad(now.getHours()) + ':' +
+        pad(now.getMinutes()) + ':' +
+        pad(now.getSeconds());
+
+      dateEl.textContent =
+        dias[now.getDay()] + ', ' +
+        pad(now.getDate()) + ' ' +
+        meses[now.getMonth()] + ' ' +
+        now.getFullYear();
+    }
+
+    tick();
+    setInterval(tick, 1000);
+  </script>
+</body>
+</html>
